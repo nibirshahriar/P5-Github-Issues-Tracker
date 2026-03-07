@@ -21,8 +21,37 @@
     </style>
 </head>
 
-<body>
-    <h1>hello</h1>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="max-w-md w-full bg-white shadow-xl rounded-lg p-6">
+
+        <div class="mx-auto text-center">
+            <img src="./assets/github-logo.png" alt="" class="mx-auto w-16 mb-3">
+            <h1 class="text-xl font-semibold">GitHub Issues Tracker</h1>
+            <h3 class="text-gray-500 text-sm">Sign in to manage your issues</h3>
+        </div>
+        <div>
+            <fieldset class="fieldset rounded-box w-full p-4 space-y-2">
+                <!-- <legend class="fieldset-legend">Login</legend> -->
+
+                <label class="label font-medium text-black">Username</label>
+                <input id="input-text" type="text" class="input w-full" placeholder="Enter Username" />
+
+                <label class="label text-black font-medium">Password</label>
+                <input id="input-password" type="password" class="input w-full" placeholder="Enter Password" />
+
+                <button id="btn-signin" class="btn btn-primary mt-4">Sign In</button>
+            </fieldset>
+        </div>
+        <div class="text-center">
+            <div class="divider">OR</div>
+            <h1 class="text-gray-400">Demo Credentials:</h1>
+            <div class="bg-[#F8FAFC] p-6 font-bold text-[#1F2937]">
+                <p>Username: admin</p>
+                <p>Password: admin123</p>
+            </div>
+        </div>
+    </div>
+    <script src="./script/login.js"></script>
 </body>
 
 </html>
