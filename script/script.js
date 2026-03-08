@@ -121,6 +121,7 @@ const displayIssues = (issues) => {
       .join("");
 
     card.innerHTML = `
+<div onclick="openModal(${issue.id})"
 <div class="${issue.status === "open" ? "border-t-4 border-green-500" : "border-t-4 border-purple-500"} rounded-lg p-4">
   <div class="flex justify-between items-center mb-3">
                         <div class="w-8 h-8 flex items-center justify-center">
@@ -170,7 +171,11 @@ loadIssues();
 document.getElementById("btn-search").addEventListener("click", () => {
   const input = document.getElementById("input-search");
   const searchValue = input.value.trim().toLowerCase();
-
+  if (searchValue === "") {
+    displayIssues(allIssues);
+    countIssues.textContent = `${allIssues.length} Issues`;
+    return;
+  }
   showLoading();
 
   fetch(
@@ -185,3 +190,15 @@ document.getElementById("btn-search").addEventListener("click", () => {
       hideLoading();
     });
 });
+
+// modal
+const openModal = (id) => {
+  fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const issue = data.data;
+      console.log(issue);
+
+      modal.showModal();
+    });
+};
