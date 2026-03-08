@@ -197,8 +197,50 @@ const openModal = (id) => {
     .then((res) => res.json())
     .then((data) => {
       const issue = data.data;
-      console.log(issue);
+      // console.log(issue);
+      const modalContent = document.getElementById("modal-box");
+      modalContent.innerHTML = `
+<div class="p-6">
+    <h2 class="text-2xl font-bold text-gray-800">
+        ${issue.title}
+    </h2>
+    <div class="flex items-center gap-3 mt-2 text-sm text-gray-500">
+        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+            ${issue.status}
+        </span>
 
+        <span>•</span>
+        <span>Opened  by  ${issue.author}</span>
+
+        <span>•</span>
+        <span>${new Date(issue.createdAt).toLocaleDateString()}</span>
+    </div>
+
+    <p class="text-gray-500 mt-4">
+        ${issue.description}
+    </p>
+</div>
+
+<div class="bg-gray-100 p-6 flex justify-between items-center">
+    <div>
+        <p class="text-sm text-gray-500">Assignee:</p>
+        <p class="font-semibold text-gray-800">${issue.assignee}</p>
+    </div>
+
+    <div>
+        <p class="text-sm text-gray-500">Priority:</p>
+        <span class="px-3 py-1 text-xs font-semibold bg-red-500 text-white rounded-full">
+            ${issue.priority.toUpperCase()}
+        </span>
+    </div>
+</div>
+
+<div class="p-6 flex justify-end">
+    <form method="dialog">
+        <button class="btn btn-primary">Close</button>
+    </form>
+</div>
+`;
       modal.showModal();
     });
 };
