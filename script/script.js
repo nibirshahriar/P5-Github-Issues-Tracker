@@ -8,15 +8,41 @@ const btnAll = document.getElementById("all-filter-btn");
 const btnOpen = document.getElementById("open-filter-btn");
 const btnClosed = document.getElementById("closed-filter-btn");
 
+// loading spinner
+const loadingSpinner = document.getElementById("loadingSpinner");
+
+const showLoading = () => {
+  loadingSpinner.classList.remove("hidden");
+  issuesContainer.innerHTML = "";
+};
+const hideLoading = () => {
+  loadingSpinner.classList.add("hidden");
+};
+
+// btn color
+const activeBtn = (btn) => {
+  const buttons = [btnAll, btnOpen, btnClosed];
+
+  buttons.forEach((button) => {
+    button.classList.remove("btn-primary", "text-white");
+    button.classList.add("text-gray-500");
+  });
+  btn.classList.add("btn-primary", "text-white");
+};
+
 // filter btn
 let allIssues = [];
 btnAll.addEventListener("click", () => {
+  showLoading();
+  activeBtn(btnAll);
   displayIssues(allIssues);
 
   const allCount = allIssues.length;
   countIssues.textContent = `${allCount} Issues`;
 });
 btnOpen.addEventListener("click", () => {
+  showLoading();
+  activeBtn(btnOpen);
   const openIssues = allIssues.filter((issue) => issue.status === "open");
   displayIssues(openIssues);
 
@@ -24,6 +50,8 @@ btnOpen.addEventListener("click", () => {
   countIssues.textContent = `${openCount} Issues`;
 });
 btnClosed.addEventListener("click", () => {
+  showLoading();
+  activeBtn(btnClosed);
   const closedIssues = allIssues.filter((issue) => issue.status === "closed");
   displayIssues(closedIssues);
 
@@ -33,6 +61,8 @@ btnClosed.addEventListener("click", () => {
 
 // Issues from API
 const loadIssues = async () => {
+  showLoading();
+
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
@@ -91,7 +121,7 @@ const displayIssues = (issues) => {
       .join("");
 
     card.innerHTML = `
-<div class="${issue.status === "open" ? "border-t-3 border-green-500" : "border-t-3 border-purple-500"} rounded-lg p-4">
+<div class="${issue.status === "open" ? "border-t-4 border-green-500" : "border-t-4 border-purple-500"} rounded-lg p-4">
   <div class="flex justify-between items-center mb-3">
                         <div class="w-8 h-8 flex items-center justify-center">
                             <img src="./assets/${issue.status === "open" ? "Open-Status.png" : "Closed- Status .png"}">
@@ -132,5 +162,6 @@ ${labelsHTML}
 `;
     issuesContainer.append(card);
   });
+  hideLoading();
 };
 loadIssues();
