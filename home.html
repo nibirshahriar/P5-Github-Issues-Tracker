@@ -41,18 +41,15 @@
     <main class="w-9/12 mx-auto mt-[60px]">
         <section>
             <div class="flex flex-col md:flex-row gap-4 mt-4  bg-white p-4 shadow-sm rounded-lg">
-                <button onclick="toggleStyle('all-filter-btn')"
-                    class="btn btn-primary w-40 py-5 mr-2 rounded text-lg  text-white" id="all-filter-btn">
+                <button class="btn btn-primary w-40 py-5 mr-2 rounded text-lg  text-white" id="all-filter-btn">
                     All
                 </button>
 
-                <button onclick="toggleStyle('open-filter-btn')"
-                    class="btn w-40 py-5 mr-2 rounded text-lg text-gray-500 bg-gray shadow-sm" id="open-filter-btn">
+                <button class="btn w-40 py-5 mr-2 rounded text-lg text-gray-500 bg-gray shadow-sm" id="open-filter-btn">
                     Open
                 </button>
 
-                <button onclick="toggleStyle('closed-filter-btn')"
-                    class="btn w-40 py-5 rounded text-gray-500 text-lg bg-gray" id="closed-filter-btn">
+                <button class="btn w-40 py-5 rounded text-gray-500 text-lg bg-gray" id="closed-filter-btn">
                     Closed
                 </button>
             </div>
@@ -66,7 +63,7 @@
                     <div class="flex items-center gap-3">
                         <img src="./assets/Aperture.png" alt="" class="w-8 h-8 p-1 bg-blue-50 rounded-full">
                         <div>
-                            <h1 class="font-semibold">50 Issues</h1>
+                            <h1 id="count-issues" class="font-semibold">50 Issues</h1>
                             <p class="text-sm text-gray-500">Track and manage your project issues</p>
                         </div>
                     </div>
@@ -90,10 +87,9 @@
 
         <!-- card Issues section -->
         <section>
-            <div id="issues-container"
-                class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white p-6 shadow-sm rounded-lg mt-0.5">
-                <!-- card dynamically added here -->        
-</section>
+            <div id="issues-container" class="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white p-6  mt-0.5">
+                <!-- card dynamically added here -->
+        </section>
 
     </main>
     <script src="./script/script.js"></script>

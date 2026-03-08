@@ -1,13 +1,47 @@
+// count issues
+const countIssues = document.getElementById("count-issues");
+
 const issuesContainer = document.getElementById("issues-container");
 
+// btns
+const btnAll = document.getElementById("all-filter-btn");
+const btnOpen = document.getElementById("open-filter-btn");
+const btnClosed = document.getElementById("closed-filter-btn");
+
+// filter btn
+let allIssues = [];
+btnAll.addEventListener("click", () => {
+  displayIssues(allIssues);
+
+  const allCount = allIssues.length;
+  countIssues.textContent = `${allCount} Issues`;
+});
+btnOpen.addEventListener("click", () => {
+  const openIssues = allIssues.filter((issue) => issue.status === "open");
+  displayIssues(openIssues);
+
+  const openCount = openIssues.length;
+  countIssues.textContent = `${openCount} Issues`;
+});
+btnClosed.addEventListener("click", () => {
+  const closedIssues = allIssues.filter((issue) => issue.status === "closed");
+  displayIssues(closedIssues);
+
+  const closedCount = closedIssues.length;
+  countIssues.textContent = `${closedCount} Issues`;
+});
+
+// Issues from API
 const loadIssues = async () => {
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const issues = await res.json();
-  displayIssues(issues.data);
+  allIssues = issues.data;
+  displayIssues(allIssues);
 };
 const displayIssues = (issues) => {
+  issuesContainer.innerHTML = "";
   issues.forEach((issue) => {
     const card = document.createElement("div");
     card.className = "bg-white rounded-lg shadow-lg p-4 w-full";
@@ -57,6 +91,7 @@ const displayIssues = (issues) => {
       .join("");
 
     card.innerHTML = `
+<div class="${issue.status === "open" ? "border-t-3 border-green-500" : "border-t-3 border-purple-500"} rounded-lg p-4">
   <div class="flex justify-between items-center mb-3">
                         <div class="w-8 h-8 flex items-center justify-center">
                             <img src="./assets/${issue.status === "open" ? "Open-Status.png" : "Closed- Status .png"}">
@@ -93,6 +128,7 @@ ${labelsHTML}
                         <p>#${issue.id} by ${issue.author}</p>
                         <p>${new Date(issue.createdAt).toLocaleDateString()}</p>
                     </div>
+</div>
 `;
     issuesContainer.append(card);
   });
