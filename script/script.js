@@ -72,6 +72,19 @@ const loadIssues = async () => {
 };
 const displayIssues = (issues) => {
   issuesContainer.innerHTML = "";
+
+  if (issues.length === 0) {
+    issuesContainer.innerHTML = `
+      <div class="col-span-full text-center py-20">
+        <i class="fa-solid fa-circle-exclamation text-4xl text-gray-400 mb-4"></i>
+        <h2 class="text-xl font-semibold text-gray-600">No Issues Found</h2>
+        <p class="text-gray-400">Try searching with different keywords</p>
+      </div>
+    `;
+    hideLoading();
+    return;
+  }
+
   issues.forEach((issue) => {
     const card = document.createElement("div");
     card.className = "bg-white rounded-lg shadow-lg p-4 w-full";
@@ -121,7 +134,7 @@ const displayIssues = (issues) => {
       .join("");
 
     card.innerHTML = `
-<div onclick="openModal(${issue.id})"
+<div onclick="openModal(${issue.id})">
 <div class="${issue.status === "open" ? "border-t-4 border-green-500" : "border-t-4 border-purple-500"} rounded-lg p-4">
   <div class="flex justify-between items-center mb-3">
                         <div class="w-8 h-8 flex items-center justify-center">
@@ -171,6 +184,7 @@ loadIssues();
 document.getElementById("btn-search").addEventListener("click", () => {
   const input = document.getElementById("input-search");
   const searchValue = input.value.trim().toLowerCase();
+  activeBtn(btnAll);
   if (searchValue === "") {
     displayIssues(allIssues);
     countIssues.textContent = `${allIssues.length} Issues`;
