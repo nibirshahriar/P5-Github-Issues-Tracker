@@ -70,6 +70,7 @@ const loadIssues = async () => {
   allIssues = issues.data;
   displayIssues(allIssues);
 };
+
 const displayIssues = (issues) => {
   issuesContainer.innerHTML = "";
 
@@ -86,52 +87,9 @@ const displayIssues = (issues) => {
   }
 
   issues.forEach((issue) => {
+    const labelsHTML = generateLabels(issue.labels);
     const card = document.createElement("div");
     card.className = "bg-white rounded-lg shadow-lg p-4 w-full";
-
-    // label Styles
-    const labelStyles = {
-      bug: {
-        class: "px-3 py-1 text-sm border bg-red-200 text-red-500 rounded-full",
-        icon: "fa-bug",
-      },
-      "help wanted": {
-        class:
-          "px-3 py-1 text-sm border bg-yellow-100 text-yellow-600 rounded-full",
-        icon: "fa-life-ring",
-      },
-      enhancement: {
-        class:
-          "px-3 py-1 text-sm border bg-green-100 text-green-600 rounded-full",
-        icon: "fa-wand-magic-sparkles",
-      },
-      "good first issue": {
-        class:
-          "px-3 py-1 text-sm border bg-blue-100 text-blue-600 rounded-full",
-        icon: "fa-star",
-      },
-      documentation: {
-        class:
-          "px-3 py-1 text-sm border bg-gray-200 text-gray-700 rounded-full",
-        icon: "fa-book",
-      },
-    };
-
-    const labelsHTML = issue.labels
-      .map((label) => {
-        const style = labelStyles[label] || {
-          class:
-            "px-3 py-1 text-sm border bg-gray-100 text-gray-700 rounded-full",
-          icon: "",
-        };
-
-        return `
-      <span class="${style.class}">
-        <i class="fa-solid ${style.icon}"></i> ${label.toUpperCase()}
-      </span>
-      `;
-      })
-      .join("");
 
     card.innerHTML = `
 <div onclick="openModal(${issue.id})">
@@ -180,6 +138,49 @@ ${labelsHTML}
 };
 loadIssues();
 
+// labelStyles function
+const labelStyles = {
+  bug: {
+    class: "px-3 py-1 text-sm border bg-red-200 text-red-500 rounded-full",
+    icon: "fa-bug",
+  },
+  "help wanted": {
+    class:
+      "px-3 py-1 text-sm border bg-yellow-100 text-yellow-600 rounded-full",
+    icon: "fa-life-ring",
+  },
+  enhancement: {
+    class: "px-3 py-1 text-sm border bg-green-100 text-green-600 rounded-full",
+    icon: "fa-wand-magic-sparkles",
+  },
+  "good first issue": {
+    class: "px-3 py-1 text-sm border bg-blue-100 text-blue-600 rounded-full",
+    icon: "fa-star",
+  },
+  documentation: {
+    class: "px-3 py-1 text-sm border bg-gray-200 text-gray-700 rounded-full",
+    icon: "fa-book",
+  },
+};
+
+const generateLabels = (labels) => {
+  return labels
+    .map((label) => {
+      const style = labelStyles[label] || {
+        class:
+          "px-3 py-1 text-sm border bg-gray-100 text-gray-700 rounded-full",
+        icon: "",
+      };
+
+      return `
+      <span class="${style.class}">
+        <i class="fa-solid ${style.icon}"></i> ${label.toUpperCase()}
+      </span>
+      `;
+    })
+    .join("");
+};
+
 //search
 document.getElementById("btn-search").addEventListener("click", () => {
   const input = document.getElementById("input-search");
@@ -212,6 +213,7 @@ const openModal = (id) => {
     .then((data) => {
       const issue = data.data;
       // console.log(issue);
+      const labelsHTML = generateLabels(issue.labels);
       const modalContent = document.getElementById("modal-box");
       modalContent.innerHTML = `
 <div class="p-6">
@@ -229,7 +231,9 @@ const openModal = (id) => {
         <span>•</span>
         <span>${new Date(issue.createdAt).toLocaleDateString()}</span>
     </div>
-
+<div class="flex gap-2 mt-3 flex-wrap">
+${labelsHTML}
+</div>
     <p class="text-gray-500 mt-4">
         ${issue.description}
     </p>
