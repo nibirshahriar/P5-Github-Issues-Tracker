@@ -141,24 +141,25 @@ loadIssues();
 // labelStyles function
 const labelStyles = {
   bug: {
-    class: "px-3 py-1 text-sm border bg-red-200 text-red-500 rounded-full",
+    class: "px-2 py-0.5 text-xs border bg-red-200 text-red-500 rounded-full",
     icon: "fa-bug",
   },
   "help wanted": {
     class:
-      "px-3 py-1 text-sm border bg-yellow-100 text-yellow-600 rounded-full",
+      "px-2 py-0.5 text-xs border bg-yellow-100 text-yellow-600 rounded-full",
     icon: "fa-life-ring",
   },
   enhancement: {
-    class: "px-3 py-1 text-sm border bg-green-100 text-green-600 rounded-full",
+    class:
+      "px-2 py-0.5 text-xs border bg-green-100 text-green-600 rounded-full",
     icon: "fa-wand-magic-sparkles",
   },
   "good first issue": {
-    class: "px-3 py-1 text-sm border bg-blue-100 text-blue-600 rounded-full",
+    class: "px-2 py-0.5 text-xs border bg-blue-100 text-blue-600 rounded-full",
     icon: "fa-star",
   },
   documentation: {
-    class: "px-3 py-1 text-sm border bg-gray-200 text-gray-700 rounded-full",
+    class: "px-2 py-0.5 text-xs border bg-gray-200 text-gray-700 rounded-full",
     icon: "fa-book",
   },
 };
@@ -168,7 +169,7 @@ const generateLabels = (labels) => {
     .map((label) => {
       const style = labelStyles[label] || {
         class:
-          "px-3 py-1 text-sm border bg-gray-100 text-gray-700 rounded-full",
+          "px-2 py-0.5 text-xs border bg-gray-100 text-gray-700 rounded-full",
         icon: "",
       };
 
